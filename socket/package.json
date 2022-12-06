@@ -1,0 +1,18 @@
+{
+  "name": "back-end-socketio",
+  "version": "1.0.0",
+  "description": "Backend enabled to work with [This](https://github.com/davidzas/react-chat)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
