@@ -15,10 +15,7 @@ return new class extends Migration {
             $table->foreignIdFor(Group::class)
                 ->references('id')->on('groups');
 
-            $table->foreignIdFor(User::class, 'participant_id')
-                ->references('id')->on('users');
-
-            $table->foreignIdFor(User::class, 'creator_id')
+            $table->foreignIdFor(User::class)
                 ->references('id')->on('users');
 
             $table->timestamps();
