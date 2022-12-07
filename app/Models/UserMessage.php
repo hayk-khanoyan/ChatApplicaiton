@@ -2,29 +2,22 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
-/**
- * @property int id
- * @property Carbon created_at
- * @property string message
- * @property User sender
- */
-class GroupMessage extends Model
+class UserMessage extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'message',
-        'sender_id'
+        'sender_id',
+        'receiver_id'
     ];
 
     public function sender(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'sender_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @property int id
@@ -26,5 +27,10 @@ class Group extends Model
     public function messages(): HasMany
     {
         return $this->hasMany(GroupMessage::class);
+    }
+
+    public function history(): MorphOne
+    {
+        return $this->morphOne(UserMessageHistory::class, 'messageable');
     }
 }

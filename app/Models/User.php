@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -54,5 +56,15 @@ class User extends Authenticatable
         return $this->hasOne(GroupParticipant::class)
             ->where('group_id', $groupId)
             ->exists();
+    }
+
+    public function messages(): HasMany
+    {
+        return $this->hasMany(UserMessage::class,'receiver_id','id');
+    }
+
+    public function history(): MorphOne
+    {
+        return $this->morphOne(UserMessageHistory::class, 'messageable');
     }
 }

@@ -42,6 +42,10 @@ class GroupMessageController extends Controller
         $message = $group->messages()
             ->create($validated);
 
+        $group->history()->updateOrCreate(['user_id' => auth()->id()], [
+            'updated_at' => now(),
+        ]);
+
         return SuccessResource::make([
             'data' => GroupMessageResource::make($message),
             'message' => 'Message posted successfully.'

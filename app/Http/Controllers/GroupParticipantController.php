@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\GroupParticipant;
 use Illuminate\Http\Request;
 
-class GroupParticipantsController extends Controller
+class GroupParticipantController extends Controller
 {
     public function index()
     {

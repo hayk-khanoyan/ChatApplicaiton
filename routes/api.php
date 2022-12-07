@@ -1,7 +1,9 @@
 <?php
 
-use App\Http\Controllers\GroupController;
+use App\Http\Controllers\MessageHistoryController;
 use App\Http\Controllers\GroupMessageController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserMessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::resource('group/{group_id}/messages', GroupMessageController::class);
 
-Route::resource('groups', GroupController::class);
+Route::resource('user/{user_id}/messages', UserMessageController::class);
+
+Route::resource('groups', MessageHistoryController::class);
+
+Route::controller(UserController::class)->prefix('users')->group(function () {
+    Route::get('search', 'search');
+    Route::post('{user_id}/send_messages', 'search');
+});
