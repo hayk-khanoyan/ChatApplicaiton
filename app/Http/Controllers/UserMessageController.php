@@ -8,7 +8,6 @@ use App\Http\Resources\SuccessResource;
 use App\Http\Resources\UserMessageResource;
 use App\Models\User;
 use App\Models\UserMessage;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserMessageController extends Controller
@@ -20,7 +19,7 @@ class UserMessageController extends Controller
         $messages = UserMessage::query()
             ->where('reciever_id', $user->id)
             ->where('sender_id', $senderId)
-            ->cursorPaginate(500);
+            ->cursorPaginate(50);
 
         return UserMessageResource::collection($messages);
     }
@@ -44,25 +43,5 @@ class UserMessageController extends Controller
             'data' => UserMessageResource::make($message),
             'message' => 'Message posted successfully.'
         ]);
-    }
-
-    public function show($id)
-    {
-        //
-    }
-
-    public function edit($id)
-    {
-        //
-    }
-
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

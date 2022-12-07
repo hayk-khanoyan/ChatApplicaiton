@@ -2,24 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Group;
 use App\Models\GroupParticipant;
 use Illuminate\Http\Request;
 
 class GroupParticipantController extends Controller
 {
-    public function index()
+    public function store(int $groupId, Request $request)
     {
-        //
-    }
+        $group = Group::query()->findOrFail($groupId);
 
-    public function create()
-    {
-        //
-    }
-
-    public function store(Request $request)
-    {
-        //
+        $group->participants()->updateOrCreate([
+            'user_id' => $request->user_id
+        ]);
     }
 
 

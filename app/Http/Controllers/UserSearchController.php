@@ -8,7 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class UserController extends Controller
+class UserSearchController extends Controller
 {
     public function search(Request $request): AnonymousResourceCollection|ErrorResource
     {

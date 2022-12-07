@@ -5,9 +5,7 @@ namespace App\Http\Resources;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/**
- * @property User $resource
- */
+/** @property User $resource */
 class UserSearchResource extends JsonResource
 {
     public function toArray($request): array
