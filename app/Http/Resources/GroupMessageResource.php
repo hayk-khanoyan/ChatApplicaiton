@@ -6,14 +6,15 @@ use App\Models\GroupMessage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @property GroupMessage resource */
-class GroupMessagesResource extends JsonResource
+class GroupMessageResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
             'id' => $this->resource->id,
-            'name' => $this->resource->name,
-            'participants' => $this->resource->participants_count,
+            'message' => $this->resource->message,
+            'sender' => $this->resource->sender->name,
+            'send_at' =>  $this->resource->created_at->diffForHumans(),
         ];
     }
 }

@@ -12,9 +12,12 @@ class GroupController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $groups = Group::whereHas('participants', function ($query) {
-            $query->where('user_id', auth()->id());
-        })->all();
+        $groups = Group::query()
+            ->whereHas('participants', function ($query) {
+                $query->where('user_id', auth()->id());
+            })
+            ->withCount('participants')
+            ->get();
 
         return GroupResource::collection($groups);
     }

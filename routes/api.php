@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\GroupController;
+use App\Http\Controllers\GroupMessageController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,15 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/get-channels', function () {
-    $mockedChannels = [[
-        "name" => 'Global chat',
-        "participants" => 0,
-        "id" => 1,
-    ], [
-        "name" => 'Funny',
-        "participants" => 0,
-        "id" => 2,
-    ],];
-    return response()->json(['channels' => $mockedChannels]);
-});
+Route::resource('group/{group_id}/messages', GroupMessageController::class);
+
+Route::resource('groups', GroupController::class);

@@ -18,7 +18,9 @@ return new class extends Migration {
             $table->string('name');
 
             $table->foreignIdFor(User::class, 'creator_id')
-                ->references('id')->on('users');
+                ->nullable()
+                ->references('id')
+                ->on('users');
 
             $table->timestamps();
         });
