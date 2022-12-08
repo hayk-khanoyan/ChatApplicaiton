@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MessageHistoryController;
 use App\Http\Controllers\GroupMessageController;
 use App\Http\Controllers\UserController;
@@ -18,8 +19,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->group(function (){
-    Route::get('/user', [UserController::class,'show']);
+Route::controller(AuthController::class)->group(function () {
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+});
+
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', [UserController::class, 'show']);
 
     Route::resource('group/{group_id}/messages', GroupMessageController::class);
 
