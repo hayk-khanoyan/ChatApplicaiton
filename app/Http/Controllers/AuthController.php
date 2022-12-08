@@ -22,23 +22,27 @@ class AuthController extends Controller
 
         return SuccessResource::make([
             'message' => 'User Created Successfully',
-            'token' => $user->createToken("API TOKEN")->plainTextToken
+            'token' => $user->createToken("API_TOKEN")->plainTextToken
         ]);
     }
 
     public function login(UserLoginRequest $request): SuccessResource|ErrorResource
     {
-        if (!Auth::attempt($request->only(['email', 'password']))) {
+        $validated = $request->validated();
+
+        if (!Auth::attempt($validated)) {
             return ErrorResource::make([
                 'message' => 'Email & Password does not match with our record.',
             ]);
         }
 
-        $user = User::where('email', $request->email)->first();
+        $user = User::query()
+            ->where('email', $validated['email'])
+            ->first();
 
         return SuccessResource::make([
             'message' => 'User Logged In Successfully',
-            'token' => $user->createToken("API TOKEN")->plainTextToken
+            'token' => $user->createToken("API_TOKEN")->plainTextToken
         ]);
     }
 }
