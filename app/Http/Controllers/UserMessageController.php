@@ -17,8 +17,14 @@ class UserMessageController extends Controller
 
         $messages = UserMessage::query()
             ->with('sender')
-            ->where('receiver_id', $user->id)
-            ->where('sender_id', $senderId)
+            ->where(function ($query) use ($user, $senderId) {
+                $query->where('receiver_id', $user->id);
+                $query->where('sender_id', $senderId);
+            })
+            ->orWhere(function ($query) use ($user, $senderId) {
+                $query->where('receiver_id', $senderId);
+                $query->where('sender_id', $user->id);
+            })
             ->cursorPaginate(50);
 
         return UserMessageResource::collection($messages);

@@ -12,7 +12,7 @@ class MessageHistoryResource extends JsonResource
     {
         return [
             'id' => $this->resource->id,
-            'message_id' => $this->resource->messageable->id,
+            'messageable_id' => $this->resource->messageable->id,
             'name' => $this->resource->messageable->name,
             'type' => $this->resource->messageable_type === Group::class ? 'group' : 'direct',
         ];

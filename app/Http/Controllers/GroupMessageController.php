@@ -9,7 +9,6 @@ use App\Http\Resources\SuccessResource;
 use App\Models\Group;
 use App\Models\GroupMessage;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GroupMessageController extends Controller
@@ -33,11 +32,20 @@ class GroupMessageController extends Controller
         return GroupMessageResource::collection($messages);
     }
 
-    public function store(int $groupId, StoreGroupMessageRequest $request): SuccessResource
+    public function store(int $groupId, StoreGroupMessageRequest $request): SuccessResource|ErrorResource
     {
+        /** @var User $user */
+        $user = auth()->user();
+
+        if (!$user->isParticipantOn($groupId)) {
+            return ErrorResource::make([
+                'message' => 'Access denied.'
+            ]);
+        }
+
         $validated = $request->validated();
 
-        $validated['sender_id'] = auth()->id();
+        $validated['sender_id'] = $user->id;
 
         $group = Group::query()->findOrFail($groupId);
 
@@ -47,6 +55,14 @@ class GroupMessageController extends Controller
         $group->history()->updateOrCreate(['user_id' => auth()->id()], [
             'updated_at' => now(),
         ]);
+
+        $participants = $group->participants()->get();
+
+        foreach ($participants as $participant) {
+            $group->history()->updateOrCreate(['user_id' => $participant->id], [
+                'updated_at' => now(),
+            ]);
+        }
 
         return SuccessResource::make([
             'data' => GroupMessageResource::make($message),

@@ -17,8 +17,14 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
          User::factory(10)->create();
-         
-         Group::factory(10)->create();
+
+         Group::factory()->create([
+             'name' => 'generalSy'
+         ]);
+
+         Group::factory()->create([
+             'name' => 'other'
+         ]);
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
