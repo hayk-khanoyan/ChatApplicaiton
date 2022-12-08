@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserMessageRequest;
-use App\Http\Resources\GroupMessageResource;
 use App\Http\Resources\SuccessResource;
 use App\Http\Resources\UserMessageResource;
 use App\Models\User;
@@ -17,25 +16,32 @@ class UserMessageController extends Controller
         $user = auth()->user();
 
         $messages = UserMessage::query()
-            ->where('reciever_id', $user->id)
+            ->with('sender')
+            ->where('receiver_id', $user->id)
             ->where('sender_id', $senderId)
             ->cursorPaginate(50);
 
         return UserMessageResource::collection($messages);
     }
 
-    public function store(int $userId, StoreUserMessageRequest $request)
+    public function store(int $userId, StoreUserMessageRequest $request): SuccessResource
     {
         $validated = $request->validated();
 
-        $validated['sender_id'] = auth()->id();
+        $sender = auth()->user();
 
-        $user = User::query()->findOrFail($userId);
+        $receiver = User::query()->findOrFail($userId);
 
-        $message = $user->messages()
+        $validated['sender_id'] = $sender->id;
+
+        $message = $receiver->messages()
             ->create($validated);
 
-        $user->history()->updateOrCreate(['user_id' => auth()->id()], [
+        $receiver->history()->updateOrCreate(['user_id' => $sender->id], [
+            'updated_at' => now(),
+        ]);
+
+        $sender->history()->updateOrCreate(['user_id' => $receiver->id], [
             'updated_at' => now(),
         ]);
 

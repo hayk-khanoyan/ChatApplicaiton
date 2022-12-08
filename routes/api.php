@@ -2,9 +2,9 @@
 
 use App\Http\Controllers\MessageHistoryController;
 use App\Http\Controllers\GroupMessageController;
-use App\Http\Controllers\UserSearchController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserMessageController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\UserSearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,17 +18,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function (){
+    Route::get('/user', [UserController::class,'show']);
+
+    Route::resource('group/{group_id}/messages', GroupMessageController::class);
+
+    Route::resource('user/{user_id}/messages', UserMessageController::class);
+
+    Route::resource('message-history', MessageHistoryController::class);
+
+    Route::controller(UserSearchController::class)->prefix('users')->group(function () {
+        Route::get('search', 'search');
+    });
 });
 
-Route::resource('group/{group_id}/messages', GroupMessageController::class);
 
-Route::resource('user/{user_id}/messages', UserMessageController::class);
 
-Route::resource('message-history', MessageHistoryController::class);
-
-Route::controller(UserSearchController::class)->prefix('users')->group(function () {
-    Route::get('search', 'search');
-    Route::post('{user_id}/send_messages', 'search');
-});

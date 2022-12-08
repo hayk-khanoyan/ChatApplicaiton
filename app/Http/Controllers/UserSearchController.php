@@ -2,23 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserSearchRequest;
 use App\Http\Resources\ErrorResource;
-use App\Http\Resources\UserSearchResource;
+use App\Http\Resources\UserResource;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserSearchController extends Controller
 {
-    public function search(Request $request): AnonymousResourceCollection|ErrorResource
+    public function search(UserSearchRequest $request): AnonymousResourceCollection|ErrorResource
     {
-        if (!isset($request->search_query)) {
-            return ErrorResource::make([
-                'message' => "Query should not be empty!"
-            ]);
-        }
+        $validated = $request->validated();
 
-        $condition = "%" . $request->search_query . "%";
+        $condition = "%" . $validated['search_query'] . "%";
 
         $users = User::query()
             ->where('name', 'like', $condition)
@@ -26,6 +22,6 @@ class UserSearchController extends Controller
             ->paginate(50);
 
 
-        return UserSearchResource::collection($users);
+        return UserResource::collection($users);
     }
 }

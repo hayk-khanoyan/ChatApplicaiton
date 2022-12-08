@@ -18,6 +18,6 @@ class UserMessage extends Model
 
     public function sender(): HasOne
     {
-        return $this->hasOne(User::class, 'id', 'user_id');
+        return $this->hasOne(User::class, 'id', 'sender_id');
     }
 }

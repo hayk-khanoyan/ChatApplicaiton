@@ -2,40 +2,34 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SuccessResource;
+use App\Http\Resources\UserResource;
 use App\Models\Group;
-use App\Models\GroupParticipant;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class GroupParticipantController extends Controller
 {
-    public function store(int $groupId, Request $request)
+    public function index(int $groupId): AnonymousResourceCollection
     {
         $group = Group::query()->findOrFail($groupId);
 
-        $group->participants()->updateOrCreate([
+        $participants = $group->participants()->get();
+
+        return UserResource::collection($participants);
+    }
+
+    public function store(int $groupId, Request $request): SuccessResource
+    {
+        $group = Group::query()->findOrFail($groupId);
+
+        $participant = $group->participants()->updateOrCreate([
             'user_id' => $request->user_id
         ]);
-    }
 
-
-    public function show(GroupParticipant $groupParticipants)
-    {
-        //
-    }
-
-    public function edit(GroupParticipant $groupParticipants)
-    {
-        //
-    }
-
-    public function update(Request $request, GroupParticipant $groupParticipants)
-    {
-        //
-    }
-
-
-    public function destroy(GroupParticipant $groupParticipants)
-    {
-        //
+        return SuccessResource::make([
+            'data' => UserResource::make($participant),
+            'message' => 'Participant added successfully.'
+        ]);
     }
 }

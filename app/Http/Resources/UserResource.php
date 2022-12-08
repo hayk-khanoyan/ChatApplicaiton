@@ -2,17 +2,16 @@
 
 namespace App\Http\Resources;
 
-use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @property User $resource */
-class UserSearchResource extends JsonResource
+class UserResource extends JsonResource
 {
     public function toArray($request): array
     {
         return [
             'id' => $this->resource->id,
             'name' => $this->resource->name,
+            'username' => $this->resource->username,
             'email' => $this->resource->email,
         ];
     }
