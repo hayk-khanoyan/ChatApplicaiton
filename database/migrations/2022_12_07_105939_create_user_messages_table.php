@@ -16,7 +16,7 @@ return new class extends Migration
                 ->references('id')->on('users');
 
             $table->foreignIdFor(User::class,'receiver_id')
-                ->references('id')->on('groups');
+                ->references('id')->on('users');
 
             $table->text('message');
 

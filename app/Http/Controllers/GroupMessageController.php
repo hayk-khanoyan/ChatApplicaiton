@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\GroupMessageSend;
 use App\Http\Requests\StoreGroupMessageRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\GroupMessageResource;
@@ -18,7 +19,20 @@ class GroupMessageController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        if (!$user->isParticipantOn($groupId)) {
+        $group = Group::query()->findOrFail($groupId);
+
+        $userParticipateOnGroup = $user->isParticipantOn($groupId);
+
+        if ($group->type === 'public' && !$userParticipateOnGroup) {
+            $group->participants()->create([
+                'user_id' => $user->id
+            ]);
+
+            $userParticipateOnGroup = true;
+        }
+
+
+        if (!$userParticipateOnGroup) {
             return ErrorResource::make([
                 'message' => 'Access denied.'
             ]);
@@ -27,6 +41,7 @@ class GroupMessageController extends Controller
         $messages = GroupMessage::query()
             ->with('sender')
             ->where('group_id', $groupId)
+            ->latest()
             ->cursorPaginate(50);
 
         return GroupMessageResource::collection($messages);
@@ -37,9 +52,13 @@ class GroupMessageController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
-        if (!$user->isParticipantOn($groupId)) {
+        $group = Group::query()->findOrFail($groupId);
+
+        $userParticipateOnGroup = $user->isParticipantOn($groupId);
+
+        if (!$userParticipateOnGroup) {
             return ErrorResource::make([
-                'message' => 'Access denied.'
+                'message' => 'Access denied for private group.'
             ]);
         }
 
@@ -47,22 +66,10 @@ class GroupMessageController extends Controller
 
         $validated['sender_id'] = $user->id;
 
-        $group = Group::query()->findOrFail($groupId);
-
         $message = $group->messages()
             ->create($validated);
 
-        $group->history()->updateOrCreate(['user_id' => auth()->id()], [
-            'updated_at' => now(),
-        ]);
-
-        $participants = $group->participants()->get();
-
-        foreach ($participants as $participant) {
-            $group->history()->updateOrCreate(['user_id' => $participant->id], [
-                'updated_at' => now(),
-            ]);
-        }
+        GroupMessageSend::dispatch($group);
 
         return SuccessResource::make([
             'data' => GroupMessageResource::make($message),

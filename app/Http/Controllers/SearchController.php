@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\UserSearchRequest;
 use App\Http\Resources\ErrorResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\SearchResultResource;
+use App\Models\Group;
 use App\Models\User;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class UserSearchController extends Controller
+class SearchController extends Controller
 {
     public function search(UserSearchRequest $request): AnonymousResourceCollection|ErrorResource
     {
@@ -17,11 +18,19 @@ class UserSearchController extends Controller
         $condition = "%" . $validated['search_query'] . "%";
 
         $users = User::query()
+            ->select('id','name')
+            ->selectRaw("'direct' as type")
             ->where('name', 'like', $condition)
-            ->orWhere('email', 'like', $condition)
+            ->orWhere('email', 'like', $condition);
+
+        $groupsAndUsers = Group::query()
+            ->select('id','name')
+            ->selectRaw("'group' as type")
+            ->where('name', 'like', $condition)
+            ->union($users)
             ->paginate(50);
 
 
-        return UserResource::collection($users);
+        return SearchResultResource::collection($groupsAndUsers);
     }
 }

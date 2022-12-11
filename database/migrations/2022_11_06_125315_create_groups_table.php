@@ -22,6 +22,8 @@ return new class extends Migration {
                 ->references('id')
                 ->on('users');
 
+            $table->string('type')->default('private');
+
             $table->timestamps();
         });
     }

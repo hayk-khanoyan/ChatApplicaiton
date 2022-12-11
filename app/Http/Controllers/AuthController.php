@@ -32,12 +32,12 @@ class AuthController extends Controller
 
         if (!Auth::attempt($validated)) {
             return ErrorResource::make([
-                'message' => 'Email & Password does not match with our record.',
+                'message' => 'Credentials does not match with our record.',
             ]);
         }
 
         $user = User::query()
-            ->where('email', $validated['email'])
+            ->where('username', $validated['username'])
             ->first();
 
         return SuccessResource::make([

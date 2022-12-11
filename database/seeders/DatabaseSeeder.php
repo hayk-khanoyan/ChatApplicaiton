@@ -19,18 +19,14 @@ class DatabaseSeeder extends Seeder
          User::factory(10)->create();
 
          Group::factory()->create([
-             'name' => 'generalSy'
+             'name' => 'generalSy',
+             'type' => 'public'
          ]);
 
          Group::factory()->create([
-             'name' => 'other'
+             'name' => 'other',
+             'type' => 'public'
          ]);
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
 
     }
 }

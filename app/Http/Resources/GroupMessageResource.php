@@ -14,6 +14,7 @@ class GroupMessageResource extends JsonResource
             'id' => $this->resource->id,
             'message' => $this->resource->message,
             'sender' => $this->resource->sender->name,
+            'sender_id' => $this->resource->sender->id,
             'send_at' =>  $this->resource->created_at->diffForHumans(),
         ];
     }

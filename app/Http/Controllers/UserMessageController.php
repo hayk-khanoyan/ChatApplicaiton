@@ -25,6 +25,7 @@ class UserMessageController extends Controller
                 $query->where('receiver_id', $senderId);
                 $query->where('sender_id', $user->id);
             })
+            ->latest()
             ->cursorPaginate(50);
 
         return UserMessageResource::collection($messages);

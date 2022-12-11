@@ -5,7 +5,7 @@ use App\Http\Controllers\MessageHistoryController;
 use App\Http\Controllers\GroupMessageController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserMessageController;
-use App\Http\Controllers\UserSearchController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,8 +34,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('message-history', MessageHistoryController::class);
 
-    Route::controller(UserSearchController::class)->prefix('users')->group(function () {
-        Route::get('search', 'search');
+    Route::controller(SearchController::class)->prefix('search')->group(function () {
+        Route::get('', 'search');
     });
 });
 
