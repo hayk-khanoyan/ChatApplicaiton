@@ -2,8 +2,10 @@
 
 namespace App\Http\Resources;
 
+use App\Models\UserMessage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/** @property UserMessage $resource */
 class UserMessageResource extends JsonResource
 {
     public function toArray($request)
