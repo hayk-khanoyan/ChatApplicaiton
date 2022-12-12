@@ -28,7 +28,7 @@ class SearchController extends Controller
             ->selectRaw("'group' as type")
             ->where('name', 'like', $condition)
             ->union($users)
-            ->paginate(50);
+            ->simplePaginate(50);
 
 
         return SearchResultResource::collection($groupsAndUsers);

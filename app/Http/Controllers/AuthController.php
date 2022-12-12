@@ -18,7 +18,9 @@ class AuthController extends Controller
 
         $validated['password'] = Hash::make($validated['password']);
 
-        $user = User::create($validated);
+        /** @var User $user */
+        $user = User::query()
+            ->create($validated);
 
         return SuccessResource::make([
             'message' => 'User Created Successfully',
@@ -35,10 +37,10 @@ class AuthController extends Controller
                 'message' => 'Credentials does not match with our record.',
             ]);
         }
-
+        /** @var User $user */
         $user = User::query()
             ->where('username', $validated['username'])
-            ->first();
+            ->firstOrFail();
 
         return SuccessResource::make([
             'message' => 'User Logged In Successfully',
