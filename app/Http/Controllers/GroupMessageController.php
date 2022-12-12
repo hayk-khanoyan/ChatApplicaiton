@@ -21,18 +21,18 @@ class GroupMessageController extends Controller
 
         $group = Group::query()->findOrFail($groupId);
 
-        $userParticipateOnGroup = $user->isParticipantOn($groupId);
+        $isParticipateOnGroup = $user->isParticipantOn($groupId);
 
-        if ($group->type === 'public' && !$userParticipateOnGroup) {
+        if ($group->type === 'public' && !$isParticipateOnGroup) {
             $group->participants()->create([
                 'user_id' => $user->id
             ]);
 
-            $userParticipateOnGroup = true;
+            $isParticipateOnGroup = true;
         }
 
 
-        if (!$userParticipateOnGroup) {
+        if (!$isParticipateOnGroup) {
             return ErrorResource::make([
                 'message' => 'Access denied.'
             ]);
@@ -54,11 +54,11 @@ class GroupMessageController extends Controller
 
         $group = Group::query()->findOrFail($groupId);
 
-        $userParticipateOnGroup = $user->isParticipantOn($groupId);
+        $isParticipateOnGroup = $user->isParticipantOn($groupId);
 
-        if (!$userParticipateOnGroup) {
+        if (!$isParticipateOnGroup) {
             return ErrorResource::make([
-                'message' => 'Access denied for private group.'
+                'message' => 'Access denied.'
             ]);
         }
 

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
  * @property int id
  * @property Carbon created_at
  * @property string name
+ * @property string type
  * @property int creator_id
  * @property int participants_count
  */
