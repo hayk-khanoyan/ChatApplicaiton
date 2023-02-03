@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\MessageHistoryResource;
-use App\Models\MessageHistory;
+use App\Http\Resources\UserChatResource;
+use App\Models\UserChat;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class MessageHistoryController extends Controller
+class UserChatController extends Controller
 {
     public function index(): AnonymousResourceCollection
     {
-        $history = MessageHistory::query()
+        $history = UserChat::query()
             ->withWhereHas('messageable')
             ->where('user_id', auth()->id())
             ->get();
 
-        return MessageHistoryResource::collection($history);
+        return UserChatResource::collection($history);
     }
 }

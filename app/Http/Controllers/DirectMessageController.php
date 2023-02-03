@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\DirectMessageSend;
 use App\Http\Requests\StoreUserMessageRequest;
 use App\Http\Resources\SuccessResource;
 use App\Http\Resources\UserMessageResource;
@@ -9,7 +10,7 @@ use App\Models\User;
 use App\Models\UserMessage;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class UserMessageController extends Controller
+class DirectMessageController extends Controller
 {
     public function index(int $senderId): AnonymousResourceCollection
     {
@@ -44,13 +45,7 @@ class UserMessageController extends Controller
         $message = $receiver->messages()
             ->create($validated);
 
-        $receiver->history()->updateOrCreate(['user_id' => $sender->id], [
-            'updated_at' => now(),
-        ]);
-
-        $sender->history()->updateOrCreate(['user_id' => $receiver->id], [
-            'updated_at' => now(),
-        ]);
+        DirectMessageSend::dispatch($receiver, $sender);
 
         return SuccessResource::make([
             'data' => UserMessageResource::make($message),

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\GroupMessageSend;
 use App\Models\Group;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -10,9 +11,8 @@ class NotifyGroupParticipants implements ShouldQueue
 {
     use InteractsWithQueue;
 
-    public function handle($event)
+    public function handle(GroupMessageSend $event)
     {
-        /** @var Group $group */
         $group = $event->group;
 
         $participants = $group->participants()->get();

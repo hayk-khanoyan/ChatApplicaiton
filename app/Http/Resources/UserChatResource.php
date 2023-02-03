@@ -3,13 +3,13 @@
 namespace App\Http\Resources;
 
 use App\Models\Group;
-use App\Models\MessageHistory;
+use App\Models\UserChat;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property MessageHistory $resource
+ * @property UserChat $resource
  */
-class MessageHistoryResource extends JsonResource
+class UserChatResource extends JsonResource
 {
     public function toArray($request)
     {

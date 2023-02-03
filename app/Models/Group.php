@@ -32,6 +32,6 @@ class Group extends Model
 
     public function history(): MorphOne
     {
-        return $this->morphOne(MessageHistory::class, 'messageable');
+        return $this->morphOne(UserChat::class, 'messageable');
     }
 }

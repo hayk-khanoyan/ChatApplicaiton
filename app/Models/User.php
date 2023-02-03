@@ -63,8 +63,8 @@ class User extends Authenticatable
         return $this->hasMany(UserMessage::class,'receiver_id','id');
     }
 
-    public function history(): MorphOne
+    public function chat(): MorphOne
     {
-        return $this->morphOne(MessageHistory::class, 'messageable');
+        return $this->morphOne(UserChat::class, 'messageable');
     }
 }

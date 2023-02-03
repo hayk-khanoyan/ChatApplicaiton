@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('message_histories', function (Blueprint $table) {
+        Schema::create('user_chats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('messageable_id')->index();
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_message_histories');
+        Schema::dropIfExists('user_chats');
     }
 };
