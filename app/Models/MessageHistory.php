@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\Relations\MorphTo;
  * @property Carbon updated_at
  * @property User|Group messageable
  */
-class UserMessageHistory extends Model
+class MessageHistory extends Model
 {
     use HasFactory;
 

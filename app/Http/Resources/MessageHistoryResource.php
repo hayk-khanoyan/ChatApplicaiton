@@ -3,11 +3,11 @@
 namespace App\Http\Resources;
 
 use App\Models\Group;
-use App\Models\UserMessageHistory;
+use App\Models\MessageHistory;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * @property UserMessageHistory $resource
+ * @property MessageHistory $resource
  */
 class MessageHistoryResource extends JsonResource
 {

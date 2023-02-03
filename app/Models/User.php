@@ -65,6 +65,6 @@ class User extends Authenticatable
 
     public function history(): MorphOne
     {
-        return $this->morphOne(UserMessageHistory::class, 'messageable');
+        return $this->morphOne(MessageHistory::class, 'messageable');
     }
 }
