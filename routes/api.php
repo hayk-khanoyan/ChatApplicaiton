@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CountryController;
 use App\Http\Controllers\DirectMessageController;
+use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\UserAuthController;
 use App\Http\Controllers\UserChatController;
 use App\Http\Controllers\GroupMessageController;
@@ -29,6 +30,9 @@ Route::controller(UserAuthController::class)->group(function (): void {
         Route::post('refresh', 'refresh');
     });
 });
+
+Route::get('countries', CountryController::class);
+Route::get('hobbies', HobbyController::class);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'show']);
