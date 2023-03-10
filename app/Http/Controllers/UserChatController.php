@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ErrorResource;
@@ -10,11 +12,11 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class UserChatController extends Controller
 {
-
     public function __construct(
         private GroupMessageController $groupMessageController,
         private DirectMessageController $directMessageController
-    ) {}
+    ) {
+    }
 
     public function index(): AnonymousResourceCollection
     {
@@ -42,10 +44,10 @@ class UserChatController extends Controller
             ->findOrFail($id);
 
         $chat->update([
-            'last_delivery' => now()
+            'last_delivery' => now(),
         ]);
 
-        return $chat->messageable_type === Group::class
+        return Group::class === $chat->messageable_type
             ? $this->groupMessageController->index($chat->messageable_id)
             : $this->directMessageController->index($chat->messageable_id);
     }

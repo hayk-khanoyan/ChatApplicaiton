@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\GroupMessageSend;
@@ -23,18 +25,17 @@ class GroupMessageController extends Controller
 
         $isParticipateOnGroup = $user->isParticipantOn($groupId);
 
-        if ($group->type === 'public' && !$isParticipateOnGroup) {
+        if ('public' === $group->type && !$isParticipateOnGroup) {
             $group->participants()->create([
-                'user_id' => $user->id
+                'user_id' => $user->id,
             ]);
 
             $isParticipateOnGroup = true;
         }
 
-
         if (!$isParticipateOnGroup) {
             return ErrorResource::make([
-                'message' => 'Access denied.'
+                'message' => 'Access denied.',
             ]);
         }
 
@@ -58,7 +59,7 @@ class GroupMessageController extends Controller
 
         if (!$isParticipateOnGroup) {
             return ErrorResource::make([
-                'message' => 'Access denied.'
+                'message' => 'Access denied.',
             ]);
         }
 
@@ -73,7 +74,7 @@ class GroupMessageController extends Controller
 
         return SuccessResource::make([
             'data' => GroupMessageResource::make($message),
-            'message' => 'Message posted successfully.'
+            'message' => 'Message posted successfully.',
         ]);
     }
 }

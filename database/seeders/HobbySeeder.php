@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Hobby;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class HobbySeeder extends Seeder
@@ -13,7 +14,7 @@ class HobbySeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         $jsonData = '[
     {

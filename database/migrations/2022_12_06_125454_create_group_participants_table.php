@@ -1,15 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use App\Models\Group;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
-    public function up()
+return new class () extends Migration {
+    public function up(): void
     {
-        Schema::create('group_participants', function (Blueprint $table) {
+        Schema::create('group_participants', function (Blueprint $table): void {
             $table->id();
 
             $table->foreignIdFor(Group::class)
@@ -27,7 +29,7 @@ return new class extends Migration {
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('group_participants');
     }

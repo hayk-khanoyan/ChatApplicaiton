@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -24,7 +26,7 @@ class UserSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'search_query' => 'required|string|min:1'
+            'search_query' => 'required|string|min:1',
         ];
     }
 }

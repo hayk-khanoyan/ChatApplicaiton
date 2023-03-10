@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -27,7 +29,7 @@ class UserRegisterRequest extends FormRequest
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'username' => 'required|unique:users,username',
-            'password' => 'required'
+            'password' => 'required',
         ];
     }
 }

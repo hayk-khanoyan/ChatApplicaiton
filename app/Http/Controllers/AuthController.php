@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserLoginRequest;
@@ -24,7 +26,7 @@ class AuthController extends Controller
 
         return SuccessResource::make([
             'message' => 'User Created Successfully',
-            'token' => $user->createToken("API_TOKEN")->plainTextToken
+            'token' => $user->createToken('API_TOKEN')->plainTextToken,
         ]);
     }
 
@@ -44,7 +46,7 @@ class AuthController extends Controller
 
         return SuccessResource::make([
             'message' => 'User Logged In Successfully',
-            'token' => $user->createToken("API_TOKEN")->plainTextToken
+            'token' => $user->createToken('API_TOKEN')->plainTextToken,
         ]);
     }
 }

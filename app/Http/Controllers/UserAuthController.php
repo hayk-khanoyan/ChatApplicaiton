@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Facades\Auth;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Resources\ErrorResource;
 use App\Http\Resources\SuccessResource;
 use App\Models\User;
-use App\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class UserAuthController extends Controller

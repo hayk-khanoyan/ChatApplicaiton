@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use App\Models\Group;
@@ -15,7 +17,7 @@ class SearchResultResource extends JsonResource
         return [
             'messageable_id' => $this->resource->id,
             'name' => $this->resource->name,
-            'type' => $this->resource->type
+            'type' => $this->resource->type,
         ];
     }
 }

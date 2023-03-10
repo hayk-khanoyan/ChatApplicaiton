@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -14,19 +16,18 @@ class DatabaseSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
-         User::factory(10)->create();
+        User::factory(10)->create();
 
-         Group::factory()->create([
-             'name' => 'generalSy',
-             'type' => 'public'
-         ]);
+        Group::factory()->create([
+            'name' => 'generalSy',
+            'type' => 'public',
+        ]);
 
-         Group::factory()->create([
-             'name' => 'other',
-             'type' => 'public'
-         ]);
-
+        Group::factory()->create([
+            'name' => 'other',
+            'type' => 'public',
+        ]);
     }
 }

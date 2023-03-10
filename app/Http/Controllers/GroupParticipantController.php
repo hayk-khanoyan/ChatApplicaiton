@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SuccessResource;
@@ -24,12 +26,12 @@ class GroupParticipantController extends Controller
         $group = Group::query()->findOrFail($groupId);
 
         $participant = $group->participants()->updateOrCreate([
-            'user_id' => $request->user_id
+            'user_id' => $request->user_id,
         ]);
 
         return SuccessResource::make([
             'data' => UserResource::make($participant),
-            'message' => 'Participant added successfully.'
+            'message' => 'Participant added successfully.',
         ]);
     }
 }

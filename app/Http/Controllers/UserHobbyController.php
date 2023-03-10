@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SuccessResource;
@@ -12,12 +14,11 @@ class UserHobbyController extends Controller
         $hobbies = Hobby::query()->where('user_id', auth()->id())->get();
 
         return SuccessResource::make([
-            'data' => $hobbies
+            'data' => $hobbies,
         ]);
     }
 
-    public function store()
+    public function store(): void
     {
-
     }
 }

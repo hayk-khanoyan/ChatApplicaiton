@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Requests\UserSearchRequest;
@@ -15,21 +17,20 @@ class SearchController extends Controller
     {
         $validated = $request->validated();
 
-        $condition = "%" . $validated['search_query'] . "%";
+        $condition = '%'.$validated['search_query'].'%';
 
         $users = User::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->selectRaw("'direct' as type")
             ->where('name', 'like', $condition)
             ->orWhere('email', 'like', $condition);
 
         $groupsAndUsers = Group::query()
-            ->select('id','name')
+            ->select('id', 'name')
             ->selectRaw("'group' as type")
             ->where('name', 'like', $condition)
             ->union($users)
             ->simplePaginate(50);
-
 
         return SearchResultResource::collection($groupsAndUsers);
     }

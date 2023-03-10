@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Http\Resources\SuccessResource;
@@ -12,7 +14,7 @@ class HobbyController extends Controller
         $hobbies = Hobby::all();
 
         return SuccessResource::make([
-            'data' => $hobbies
+            'data' => $hobbies,
         ]);
     }
 }

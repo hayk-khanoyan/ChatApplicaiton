@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Events\DirectMessageSend;
@@ -18,11 +20,11 @@ class DirectMessageController extends Controller
 
         $messages = UserMessage::query()
             ->with('sender')
-            ->where(function ($query) use ($user, $senderId) {
+            ->where(function ($query) use ($user, $senderId): void {
                 $query->where('receiver_id', $user->id);
                 $query->where('sender_id', $senderId);
             })
-            ->orWhere(function ($query) use ($user, $senderId) {
+            ->orWhere(function ($query) use ($user, $senderId): void {
                 $query->where('receiver_id', $senderId);
                 $query->where('sender_id', $user->id);
             })
@@ -49,7 +51,7 @@ class DirectMessageController extends Controller
 
         return SuccessResource::make([
             'data' => UserMessageResource::make($message),
-            'message' => 'Message posted successfully.'
+            'message' => 'Message posted successfully.',
         ]);
     }
 }

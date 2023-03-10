@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @property int id
@@ -20,7 +21,7 @@ class GroupMessage extends Model
 
     protected $fillable = [
         'message',
-        'sender_id'
+        'sender_id',
     ];
 
     public function sender(): HasOne

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -22,7 +24,9 @@ use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
  */
 class User extends Authenticatable implements JWTSubject
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens;
+    use HasFactory;
+    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -63,7 +67,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function messages(): HasMany
     {
-        return $this->hasMany(UserMessage::class,'receiver_id','id');
+        return $this->hasMany(UserMessage::class, 'receiver_id', 'id');
     }
 
     public function chat(): MorphOne
@@ -88,6 +92,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function latestMessage(): HasOne
     {
-        return $this->hasOne(UserMessage::class,'receiver_id','id')->latest();
+        return $this->hasOne(UserMessage::class, 'receiver_id', 'id')->latest();
     }
 }

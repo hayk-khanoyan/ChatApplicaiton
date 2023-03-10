@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Carbon\Carbon;
@@ -22,7 +24,7 @@ class UserMessage extends Model
     protected $fillable = [
         'message',
         'sender_id',
-        'receiver_id'
+        'receiver_id',
     ];
 
     public function sender(): HasOne
