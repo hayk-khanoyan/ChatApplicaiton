@@ -10,12 +10,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property string message
- * @property int sender_id
- * @property int id
- * @property int receiver_id
- * @property Carbon created_at
- * @property User sender
+ * @property string $message
+ * @property int    $sender_id
+ * @property int    $id
+ * @property int    $receiver_id
+ * @property Carbon $created_at
+ * @property User   $sender
  */
 class UserMessage extends Model
 {

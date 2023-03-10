@@ -10,10 +10,10 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * @property int id
- * @property Carbon created_at
- * @property string message
- * @property User sender
+ * @property int    $id
+ * @property Carbon $created_at
+ * @property string $message
+ * @property User   $sender
  */
 class GroupMessage extends Model
 {

@@ -16,11 +16,11 @@ use Laravel\Sanctum\HasApiTokens;
 use PHPOpenSourceSaver\JWTAuth\Contracts\JWTSubject;
 
 /**
- * @property int id
- * @property Carbon created_at
- * @property string name
- * @property string email
- * @property string password
+ * @property int    $id
+ * @property Carbon $created_at
+ * @property string $name
+ * @property string $email
+ * @property string $password
  */
 class User extends Authenticatable implements JWTSubject
 {

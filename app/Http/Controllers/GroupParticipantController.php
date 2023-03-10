@@ -14,6 +14,7 @@ class GroupParticipantController extends Controller
 {
     public function index(int $groupId): AnonymousResourceCollection
     {
+        /** @var Group $group */
         $group = Group::query()->findOrFail($groupId);
 
         $participants = $group->participants()->get();
@@ -23,10 +24,13 @@ class GroupParticipantController extends Controller
 
     public function store(int $groupId, Request $request): SuccessResource
     {
+        $validated = $request->all();
+
+        /** @var Group $group */
         $group = Group::query()->findOrFail($groupId);
 
         $participant = $group->participants()->updateOrCreate([
-            'user_id' => $request->user_id,
+            'user_id' => $validated['user_id'],
         ]);
 
         return SuccessResource::make([

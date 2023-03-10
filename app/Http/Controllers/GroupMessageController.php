@@ -21,6 +21,7 @@ class GroupMessageController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
+        /** @var Group $group */
         $group = Group::query()->findOrFail($groupId);
 
         $isParticipateOnGroup = $user->isParticipantOn($groupId);
@@ -53,6 +54,7 @@ class GroupMessageController extends Controller
         /** @var User $user */
         $user = auth()->user();
 
+        /** @var Group $group */
         $group = Group::query()->findOrFail($groupId);
 
         $isParticipateOnGroup = $user->isParticipantOn($groupId);

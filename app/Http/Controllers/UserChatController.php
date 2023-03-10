@@ -39,6 +39,7 @@ class UserChatController extends Controller
 
     public function chatMessages(int $id): ErrorResource|AnonymousResourceCollection
     {
+        /** @var UserChat $chat */
         $chat = UserChat::query()
             ->where('user_id', auth()->id())
             ->findOrFail($id);

@@ -16,6 +16,9 @@ class DirectMessageController extends Controller
 {
     public function index(int $senderId): AnonymousResourceCollection
     {
+        /**
+         * @var User $user
+         */
         $user = auth()->user();
 
         $messages = UserMessage::query()
@@ -38,8 +41,14 @@ class DirectMessageController extends Controller
     {
         $validated = $request->validated();
 
+        /**
+         * @var User $sender
+         */
         $sender = auth()->user();
 
+        /**
+         * @var User $receiver
+         */
         $receiver = User::query()->findOrFail($userId);
 
         $validated['sender_id'] = $sender->id;

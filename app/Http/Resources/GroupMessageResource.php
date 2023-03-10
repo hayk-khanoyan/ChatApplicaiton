@@ -7,7 +7,7 @@ namespace App\Http\Resources;
 use App\Models\GroupMessage;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @property GroupMessage resource */
+/** @property GroupMessage $resource */
 class GroupMessageResource extends JsonResource
 {
     public function toArray($request): array
