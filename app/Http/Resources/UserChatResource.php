@@ -13,11 +13,15 @@ class UserChatResource extends JsonResource
 {
     public function toArray($request)
     {
+        $groupIcon = "https://img.freepik.com/free-icon/multiple-users-silhouette_318-49546.jpg";
+
         return [
             'id' => $this->resource->id,
-            'messageable_id' => $this->resource->messageable->id,
-            'name' => $this->resource->messageable->name,
-            'type' => $this->resource->messageable_type === Group::class ? 'group' : 'direct',
+            'chat_title' => $this->resource->messageable->name,
+            'chat_type' => $this->resource->messageable_type === Group::class ? 'group' : 'direct',
+            'image_url' => $this->resource->messageable_type === Group::class ? $groupIcon : '',
+            'display_message' => $this->resource->messageable->latestMessage?->message ?? '',
+            'is_read' => $this->resource->last_delivery && $this->resource->last_delivery->greaterThanOrEqualTo($this->resource->updated_at)
         ];
     }
 }

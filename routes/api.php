@@ -20,7 +20,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
 Route::controller(UserAuthController::class)->group(function (): void {
     Route::post('login', 'login');
     Route::post('register', 'register');
@@ -34,19 +33,17 @@ Route::controller(UserAuthController::class)->group(function (): void {
 Route::get('countries', CountryController::class);
 Route::get('hobbies', HobbyController::class);
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:api')->group(function () {
     Route::get('/user', [UserController::class, 'show']);
 
     Route::resource('group/{group_id}/messages', GroupMessageController::class);
 
     Route::resource('user/{user_id}/messages', DirectMessageController::class);
 
-    Route::resource('message-history', UserChatController::class);
+    Route::resource('chats', UserChatController::class);
+    Route::get('chats/{chat_id}/messages', [UserChatController::class, 'chatMessages']);
 
     Route::controller(SearchController::class)->prefix('search')->group(function () {
         Route::get('', 'search');
     });
 });
-
-
-

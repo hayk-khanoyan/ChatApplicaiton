@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->string('messageable_id')->index();
             $table->string('messageable_type');
+            $table->timestamp('last_delivery')->nullable();
             $table->timestamps();
         });
     }
